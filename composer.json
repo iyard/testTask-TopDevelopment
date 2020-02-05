@@ -1,0 +1,12 @@
+{
+    "name": "valentin/test-task-top-development",
+    "authors": [
+        {
+            "name": "i-yard",
+            "email": "iyardsev@gmail.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "~6.0"
+    }
+}
