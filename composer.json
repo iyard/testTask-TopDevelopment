@@ -9,10 +9,7 @@
     "autoload": {
         "psr-4": {
             "App\\": "src/"
-        },
-        "files": [
-            "index.php"
-        ]
+        }
     },
     "require": {
         "guzzlehttp/guzzle": "~6.0"
