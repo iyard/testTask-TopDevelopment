@@ -10,7 +10,7 @@ return [
         'requestLanguage' => 'ru_RU'
     ],
     'formatters' => [
-        'xml' => 'App\formatters\XmlFormatter',
-        'json' => 'App\formatters\JsonFormatter',
+        'xml' => 'App\formatters\XmlWeatherFormatter',
+        'json' => 'App\formatters\JsonWeatherFormatter',
     ]
 ];
