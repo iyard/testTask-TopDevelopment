@@ -4,7 +4,6 @@
 namespace App;
 
 
-use App\formatters\Formatter;
 use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;
 
@@ -18,8 +17,20 @@ class YandexWheather
      * @var Client
      */
     private $_httpClient;
+
+    /**
+     * @var array
+     */
     private $_config;
+
+    /**
+     * @var string
+     */
     private $_lat;
+
+    /**
+     * @var string
+     */
     private $_lon;
 
     public function __construct($httpClient)
@@ -33,7 +44,7 @@ class YandexWheather
     /**
      * @return mixed
      */
-    private function getRequestMethod()
+    private function getRequestMethod() : string
     {
         return $this->_config['requestMethod'];
     }
@@ -41,7 +52,7 @@ class YandexWheather
     /**
      * @return mixed
      */
-    private function getRequestUrl()
+    private function getRequestUrl() : string
     {
         return $this->_config['requestUrl'];
     }
@@ -49,7 +60,7 @@ class YandexWheather
     /**
      * @return mixed
      */
-    private function getRequestHeaders()
+    private function getRequestHeaders() : array
     {
         return $this->_config['requestHeaders'];
     }
@@ -57,7 +68,7 @@ class YandexWheather
     /**
      * @return mixed
      */
-    private function getRequestLanguage()
+    private function getRequestLanguage() : string
     {
         return $this->_config['requestLanguage'];
     }
@@ -65,7 +76,7 @@ class YandexWheather
     /**
      * @return mixed
      */
-    private function getLat()
+    private function getLat() : string
     {
         return $this->_lat;
     }
@@ -73,7 +84,7 @@ class YandexWheather
     /**
      * @return mixed
      */
-    private function getLon()
+    private function getLon() : string
     {
         return $this->_lon;
     }
@@ -81,34 +92,36 @@ class YandexWheather
     /**
      * Return formatted weather
      *
-     * @param string $format
      * @param string $lat
      * @param string $lon
-     * @return string
+     * @return array
      */
-    public function get(string $format, $lat = self::LAT_DEFAULT, $lon = self::LON_DEFAULT) : string
+    public function get($lat = self::LAT_DEFAULT, $lon = self::LON_DEFAULT) : array
     {
         $this->_lat = $lat;
         $this->_lon = $lon;
-        $formatter = Formatter::getInstance($format);
 
         if (!$response = $this->sendRequest()) {
-            return '';
+            return [];
         };
-        $weather = $this->getWeather($response);
-        return $formatter->format($weather);
+
+        return  $this->getWeather($response);
     }
 
+    /**
+     * @param $response ResponseInterface
+     * @return string
+     */
     public function getResponseBody($response)
     {
         return (string) $response->getBody();
     }
 
     /**
-     * @param $response
-     * @return string
+     * @param $response ResponseInterface
+     * @return array
      */
-    private function getWeather($response)
+    private function getWeather($response) : array
     {
         $weather = json_decode($this->getResponseBody($response), true);
         return $weather['fact'];
