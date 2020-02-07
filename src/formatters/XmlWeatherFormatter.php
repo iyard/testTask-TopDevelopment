@@ -4,11 +4,22 @@
 namespace App\formatters;
 
 
-class XmlFormatter extends Formatter
+use Spatie\ArrayToXml\ArrayToXml;
+
+class XmlWeatherFormatter extends WeatherFormatter
 {
-    public function format(array $weather) : string
+    public function convertData(array $weather) : string
     {
-        // TODO: Implement format() method.
+        return ArrayToXml::convert($weather);
+    }
+
+    public function getOrderSort() : array
+    {
+        return [
+            'obs_time',
+            'wind_speed',
+            'temp'
+        ];
     }
 
 }

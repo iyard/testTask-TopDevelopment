@@ -4,11 +4,21 @@
 namespace App\formatters;
 
 
-class JsonFormatter extends Formatter
+class JsonWeatherFormatter extends WeatherFormatter
 {
-    public function format(array $weather) : string
+
+    public function convertData(array $weather) : string
     {
-        // TODO: Implement format() method.
+        return json_encode($weather);
+    }
+
+    public function getOrderSort() : array
+    {
+        return [
+            'obs_time',
+            'temp',
+            'wind_dir'
+        ];
     }
 
 }
